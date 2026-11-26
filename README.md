@@ -1,2 +1,162 @@
 # cc-jobs
-Crawler for CC-related jobs, including weekly check of CCC-member jobs
+
+Finds open confidential computing roles at [Confidential Computing Consortium](https://confidentialcomputing.io) (CCC) member companies, and at selected non-member companies, by reading their public job boards.
+
+Two crawlers share one keyword matcher (`cc_common.py`):
+
+- **`crawler.py`** walks the CCC member list in `members.yaml` and writes a member report, plus optional per-member outreach emails.
+- **`non_member_jobs_aggregator.py`** walks `non_member_targets.yaml` and writes a report on the wider market.
+
+Each run writes a dated Markdown report and a JSON snapshot. The next run diffs against the most recent snapshot to show roles that have opened or closed.
+
+---
+
+## Requirements
+
+- **Python 3.10+** (the code uses `X | Y` union type hints)
+- Packages in `requirements.txt`: `requests`, `beautifulsoup4`, `lxml`, `pyyaml`, `feedparser`
+
+## Install
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+---
+
+## Run
+
+```bash
+python3 crawler.py                        # CCC member report
+python3 non_member_jobs_aggregator.py     # non-member market report
+```
+
+Outputs are written next to the scripts and are gitignored:
+
+| File | Contents |
+|---|---|
+| `CCC-jobs-YYYY-MM-DD.md` / `.json` | Member report and snapshot |
+| `Non-member-CC-jobs-YYYY-MM-DD.md` / `.json` | Non-member report and snapshot |
+| `emails-YYYY-MM-DD/` | One draft outreach email per member with open roles |
+
+### `crawler.py` flags
+
+| Flag | Default | Effect |
+|---|---|---|
+| `--members PATH` | `members.yaml` | Member config to use |
+| `--output PATH` | `CCC-jobs-YYYY-MM-DD.md` | Report output path |
+| `--no-sync` | off | Don't rewrite `members.yaml` from LFX (see [LFX member sync](#lfx-member-sync)) |
+| `--force-refresh` | off | Re-fetch the LFX member list even if the cache is fresh |
+| `--lfx-cache PATH` | `lfx-members.json` | LFX member cache path |
+| `--email-template PATH` | `email-template.txt`, else `email-template.example.txt` | Outreach email template |
+
+### `non_member_jobs_aggregator.py` flags
+
+| Flag | Default | Effect |
+|---|---|---|
+| `--targets PATH` | `non_member_targets.yaml` | Companies and boards to crawl |
+| `--members PATH` | `members.yaml` | Used for keywords, and to drop companies that have joined the CCC |
+| `--output PATH` | `Non-member-CC-jobs-YYYY-MM-DD.md` | Report output path |
+| `--no-aids` | off | Omit the manual search links section |
+
+---
+
+## How matching works
+
+Matching runs over each posting's title, team and full description, using the keywords in `members.yaml`:
+
+- **Case-sensitive acronyms** (`TEE`, `SGX`, `TDX`, `SEV`, `SEV-SNP`) and **case-insensitive phrases** (`confidential computing`, `enclave`, `remote attestation`, ...), plus Chinese equivalents.
+- Both match on word boundaries, so `TEE` doesn't match "COMMITTEE". Plurals match too (`TEEs`, `enclaves`), except `SEV`, because "SEVs" usually means incident severities.
+- Known non-CC uses are filtered out, for example "SEV-1" incidents, a "TEE team" that isn't about TEEs, and network "enclaves" in government postings.
+- **Weak keywords** (currently `trusted execution`) are also ordinary English ("a trusted execution partner"). In the non-member report, a role matching only weak keywords is listed under **Needs Review** and not counted.
+
+Each role in a report shows which keywords matched, so false positives are easy to spot.
+
+---
+
+## Outreach emails
+
+`crawler.py` writes one draft email per member with open roles, built from a template in which `[]` is replaced by the job list. `email-template.example.txt` is the committed default. To use your own wording or signature, copy it to `email-template.txt` (gitignored) and edit it.
+
+---
+
+## Configuring members (`members.yaml`)
+
+### Keywords
+
+The `keywords` block at the top of `members.yaml` holds the `case_sensitive` and `case_insensitive` lists. Both crawlers read it, so the member and non-member reports always match on the same terms. See [How matching works](#how-matching-works).
+
+### Member `type` values
+
+| Type | What it does | Required fields |
+|---|---|---|
+| `greenhouse` | Fetches full job content from the Greenhouse API | `slug` |
+| `lever` | Fetches postings from the Lever API | `slug` |
+| `workday` | POSTs keyword searches to the Workday search API | `workday_api`, `workday_job_base` |
+| `teamtailor_rss` | Parses a Teamtailor RSS feed | `rss_url`, `careers_url` |
+| `herp` | Scrapes the Herp careers HTML page | `slug`, `careers_url` |
+| `fetch` | Fetches a single page and checks for keyword presence | `careers_url` |
+| `amd` | Fetches AMD jobs via their Jibe Search 4 JSON API (full descriptions inline, paginated) | `amd_api_url`, `amd_job_url_base`, `careers_url` |
+| `huawei` | Fetches Huawei social/experienced recruitment via their public JSON API | `huawei_api_base`, `huawei_job_url`, `careers_url` |
+| `talentbrew` | Radancy TalentBrew search pages | `talentbrew_base`, `careers_url` |
+| `oracle_hcm` | Oracle HCM Candidate Experience API | `oracle_host`, `oracle_site`, `careers_url` |
+| `eightfold` | Eightfold careers API | `eightfold_host`, `eightfold_domain`, `careers_url` |
+| `phenom` | Phenom careers site | `phenom_site`, `careers_url` |
+| `bytedance` | ByteDance-family job portals (TikTok, Volcano Engine) | `bytedance_search_url`, `bytedance_website_path`, `bytedance_job_url`, `careers_url` |
+| `gated` | Documented but not crawled (JS-rendered / login-gated portal) | `careers_url`, `note` |
+| `blocked` | Documented but not crawled (returns 4xx/timeout) | `careers_url`, `note` |
+| `no_page` | Documented but not crawled (no accessible careers page) | `note` |
+
+All types accept an optional `note` field for human context in the report.
+
+### Non-member targets (`non_member_targets.yaml`)
+
+Each entry under `targets` has a `company`, `sector`, `ats` (`greenhouse`, `lever` or `ashby`) and board `slug`. Companies with no crawlable board go under `manual_search` with a `careers_url`; the report lists them as search links and doesn't count them. Check that a new slug returns jobs before adding it:
+
+```bash
+python3 -c "import cc_common as c; print(len(c.fetch_board('greenhouse','anthropic')[0]))"
+```
+
+---
+
+## Improving coverage for JS-gated portals
+
+Many large company portals (NVIDIA, Google, Intel, AMD, Qualcomm…) are marked `type: gated` because they render job listings in a JS SPA rather than static HTML. However, most of these SPAs are thin fronts over discoverable JSON APIs — exactly as Workday and Huawei are. There are three tiers of coverage improvement, in descending order of reliability:
+
+### Tier 1 — Reverse-engineer the hidden JSON API (preferred)
+
+The recipe:
+1. Open the company's careers listing page in a browser.
+2. Open DevTools → Network tab, filter for XHR/Fetch, and reload.
+3. Find the request that returns a list of job postings as JSON (usually a `GET` or `POST` to a path like `/jobs`, `/api/postings`, `/cxs/…/jobs`, etc.).
+4. Reproduce the request with `curl` or `requests` (often only a `Referer` header or a `Content-Type` is needed).
+5. Add a new fetcher function and a new `type` in `members.yaml` — see `fetch_huawei` and `fetch_workday` in `crawler.py` as templates.
+
+### Tier 2 — Headless browser fallback
+
+For portals where the JSON API requires dynamic auth tokens or anti-bot measures that can't be reproduced statically, [Playwright](https://playwright.dev/python/) can render the page and extract text. Keep this **optional and behind a flag** (`--browser`) so the default cron run stays dependency-light. Add a `type: browser` entry to `members.yaml` with a `browser_url` and optional `browser_search` term.
+
+### Tier 3 — Pre-filled manual search links
+
+For anything that remains gated, improve the report pointer (`_member_block` in `crawler.py`, `gated` branch) to emit a **pre-filled keyword search deep-link** (e.g. `https://jobs.nvidia.com/search?q=confidential+computing`) rather than just the careers home URL, so the manual check is one click.
+
+---
+
+## LFX member sync
+
+Once a week (or with `--force-refresh`), `crawler.py` fetches the current CCC member list from the public LFX API, caches it in `lfx-members.json`, and updates `members.yaml` when members join or leave. New members are added as `no_page` entries for someone to fill in. No credentials are needed. If the API call fails, the crawler uses the stale cache or skips the sync. Pass `--no-sync` when running against a test config so it isn't rewritten.
+
+---
+
+## Seeding snapshot history
+
+If you have existing Markdown reports but no corresponding `.json` snapshots, use `seed_snapshot.py` to back-fill them so the diff logic has history to work with:
+
+```bash
+python3 seed_snapshot.py CCC-jobs-2026-05-12.md
+# Produces CCC-jobs-2026-05-12.json in the same directory
+```
+
+---

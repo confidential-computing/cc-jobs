@@ -1,0 +1,174 @@
+# Non-CCC-member companies with crawlable ATS job boards.
+#
+# These are organisations outside the consortium that plausibly hire for
+# confidential computing: cloud/CDN, AI labs, data platforms, and the
+# crypto/fintech firms that use TEEs for key management.
+#
+# `ats` must be one of the fetchers in cc_common.FETCHERS (greenhouse, lever,
+# ashby). `slug` is the board identifier, NOT the company's domain — verify a
+# new one returns jobs before committing it:
+#
+#   python3 -c "import cc_common as c; print(len(c.fetch_board('greenhouse','anthropic')[0]))"
+#
+# Anything listed here is cross-checked against members.yaml at runtime and
+# skipped if the company has since joined the CCC, so a new member can't
+# quietly show up in the non-member report.
+
+targets:
+  # ── AI labs / model providers ──────────────────────────────────────────────
+  - company: Anthropic
+    sector: AI/ML Providers
+    ats: greenhouse
+    slug: anthropic
+
+  - company: OpenAI
+    sector: AI/ML Providers
+    ats: ashby
+    slug: openai
+
+  - company: Cohere
+    sector: AI/ML Providers
+    ats: ashby
+    slug: cohere
+
+  - company: Scale AI
+    sector: AI/ML Providers
+    ats: greenhouse
+    slug: scaleai
+
+  - company: Together AI
+    sector: AI/ML Providers
+    ats: greenhouse
+    slug: togetherai
+
+  - company: Modal
+    sector: AI/ML Providers
+    ats: ashby
+    slug: modal
+
+  - company: Baseten
+    sector: AI/ML Providers
+    ats: ashby
+    slug: baseten
+
+  # ── Cloud / CDN / infrastructure ──────────────────────────────────────────
+  - company: Cloudflare
+    sector: Cloud Infrastructure
+    ats: greenhouse
+    slug: cloudflare
+
+  - company: Fastly
+    sector: Cloud Infrastructure
+    ats: greenhouse
+    slug: fastly
+
+  - company: Datadog
+    sector: Cloud Infrastructure
+    ats: greenhouse
+    slug: datadog
+    note: "Names an internal team 'Technical Escalation Engineering (TEE)' — filtered in cc_common"
+
+  - company: GitLab
+    sector: Cloud Infrastructure
+    ats: greenhouse
+    slug: gitlab
+
+  # ── Data platforms ────────────────────────────────────────────────────────
+  - company: Databricks
+    sector: Data Platforms
+    ats: greenhouse
+    slug: databricks
+
+  - company: Elastic
+    sector: Data Platforms
+    ats: greenhouse
+    slug: elastic
+
+  - company: MongoDB
+    sector: Data Platforms
+    ats: greenhouse
+    slug: mongodb
+
+  - company: Palantir
+    sector: Data Platforms
+    ats: lever
+    slug: palantir
+
+  # ── Fintech / crypto (heavy TEE + HSM users) ──────────────────────────────
+  - company: Stripe
+    sector: Fintech/Crypto
+    ats: greenhouse
+    slug: stripe
+
+  - company: Coinbase
+    sector: Fintech/Crypto
+    ats: greenhouse
+    slug: coinbase
+
+  - company: Robinhood
+    sector: Fintech/Crypto
+    ats: greenhouse
+    slug: robinhood
+    note: "Uses 'SEV' for incident severity — filtered in cc_common"
+
+  - company: Fireblocks
+    sector: Fintech/Crypto
+    ats: greenhouse
+    slug: fireblocks
+
+  - company: Ramp
+    sector: Fintech/Crypto
+    ats: ashby
+    slug: ramp
+
+  - company: Turnkey
+    sector: Fintech/Crypto
+    ats: ashby
+    slug: turnkey
+
+# Manual-search aids: companies with no public ATS API (JS portals, Workday
+# behind SSO, or bespoke boards). These produce LinkedIn/careers links only and
+# are reported separately from real job hits so they never inflate the count.
+manual_search:
+  - company: Amazon Web Services (AWS)
+    sector: Cloud Infrastructure
+    careers_url: https://www.amazon.jobs/en/teams/aws
+  - company: Oracle
+    sector: Cloud Infrastructure
+    careers_url: https://www.oracle.com/careers/
+  - company: DigitalOcean
+    sector: Cloud Infrastructure
+    careers_url: https://www.digitalocean.com/careers/
+  - company: Snowflake
+    sector: Data Platforms
+    careers_url: https://careers.snowflake.com/
+  - company: Goldman Sachs
+    sector: Banking/Finance
+    careers_url: https://www.goldmansachs.com/careers/
+  - company: Morgan Stanley
+    sector: Banking/Finance
+    careers_url: https://www.morganstanley.com/careers
+  - company: Citigroup
+    sector: Banking/Finance
+    careers_url: https://jobs.citi.com/
+  - company: Capital One
+    sector: Banking/Finance
+    careers_url: https://www.capitalonecareers.com/
+  - company: Accenture
+    sector: System Integrators
+    careers_url: https://www.accenture.com/us-en/careers
+  - company: Deloitte
+    sector: System Integrators
+    careers_url: https://www2.deloitte.com/us/en/careers.html
+  - company: Capgemini
+    sector: System Integrators
+    careers_url: https://www.capgemini.com/careers/
+  - company: Infosys
+    sector: System Integrators
+    careers_url: https://www.infosys.com/careers/
+
+# Keywords used to build the LinkedIn search URLs in the manual-search section.
+linkedin_keywords:
+  - confidential computing
+  - trusted execution environment
+  - privacy engineer

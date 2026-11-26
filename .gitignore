@@ -1,0 +1,38 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor / tooling cruft
+.claude/
+\#*\#
+*~
+.#*
+
+# Auto-generated config backups (crawler rewrites members.yaml on LFX sync)
+members.yaml.backup-*
+
+# Workday health log — runtime state, regenerated on each monitor run
+workday_health_log.json
+
+# LFX member cache — regenerated weekly, not source of truth
+lfx-members.json
+
+# Scratch: one-off experiments, debug scripts and throwaway crawl output.
+# Nothing here is needed to reproduce a weekly run.
+scratch/
+
+# Outreach email drafts contain per-company generated text; regenerate as needed
+emails-*/
+
+# Run outputs — reports, snapshots and outreach drafts are generated, not source
+CCC-jobs-*.md
+CCC-jobs-*.json
+Non-member-CC-jobs-*.md
+Non-member-CC-jobs-*.json
+
+# Local email template (signed by the sender); email-template.example.txt is the
+# committed default
+email-template.txt
+
+# Any virtualenv, including broken/old ones
+.venv*/

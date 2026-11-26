@@ -1,0 +1,412 @@
+keywords:
+  # Matched with word boundaries, case-sensitive
+  case_sensitive: [TEE, SGX, TDX, SEV, SEV-SNP]
+  # Matched case-insensitively
+  case_insensitive:
+    - confidential computing
+    - confidential compute
+    - enclave
+    - arm cca
+    - remote attestation
+    - confidential vm
+    - confidential container
+    - trusted execution
+    # Chinese equivalents, for ByteDance/Volcano Engine postings: confidential
+    # computing, trusted execution environment, confidential container/VM,
+    # remote attestation
+    - 机密计算
+    - 可信执行环境
+    - 机密容器
+    - 机密虚拟机
+    - 远程证明
+
+members:
+
+  # ── Premier ──────────────────────────────────────────────────────────────
+
+  - name: Advanced Micro Devices (AMD)
+    tier: Premier
+    type: amd
+    careers_url: https://careers.amd.com/careers-home/jobs
+    amd_api_url: https://careers.amd.com/api/jobs
+    amd_job_url_base: https://careers.amd.com/careers-home/jobs
+    note: "Jibe Search 4 portal — public JSON API"
+
+  - name: Google LLC
+    tier: Premier
+    type: gated
+    careers_url: https://careers.google.com
+    note: "Custom JS portal — search for confidential computing directly"
+
+  - name: Huawei Technologies Co., Ltd
+    tier: Premier
+    type: huawei
+    careers_url: https://career.huawei.com/reccampportal/portal5/social-recruitment.html
+    huawei_api_base: https://career.huawei.com/reccampportal/services/portal/portalpub
+    huawei_job_url: https://career.huawei.com/reccampportal/portal5/social-recruitment-detail.html
+    note: "Custom portal — public JSON API (social/experienced recruitment, global scope)"
+
+  - name: Intel Corporation
+    tier: Premier
+    type: workday
+    workday_api: https://intel.wd1.myworkdayjobs.com/wday/cxs/intel/External/jobs
+    workday_job_base: https://intel.wd1.myworkdayjobs.com/External
+    careers_url: https://jobs.intel.com
+
+  - name: Meta Platforms, Inc.
+    tier: Premier
+    type: gated
+    careers_url: https://metacareers.com
+    note: "Full descriptions require login — search under Security at metacareers.com"
+
+  - name: Microsoft Corporation
+    tier: Premier
+    type: eightfold
+    eightfold_host: apply.careers.microsoft.com
+    eightfold_domain: microsoft.com
+    careers_url: https://apply.careers.microsoft.com/careers
+
+  - name: NVIDIA Corporation
+    tier: Premier
+    type: workday
+    careers_url: https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite
+    workday_api: https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs
+    workday_job_base: https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite
+
+  - name: Shielded Technologies
+    tier: Premier
+    type: fetch
+    careers_url: https://www.shielded.io/careers
+
+  - name: TikTok Inc.
+    tier: Premier
+    type: bytedance
+    bytedance_search_url: https://api.lifeattiktok.com/api/v1/public/supplier/search/job/posts
+    bytedance_website_path: tiktok
+    bytedance_job_url: https://lifeattiktok.com/search/{id}
+    careers_url: https://lifeattiktok.com/search
+
+
+  - name: Volcano Engine
+    tier: Premier
+    type: bytedance
+    bytedance_search_url: https://jobs.bytedance.com/api/v1/search/job/posts
+    bytedance_website_path: society
+    bytedance_job_url: https://jobs.bytedance.com/experienced/position/{id}/detail
+    bytedance_keyword: 火山引擎
+    bytedance_csrf: true
+    careers_url: https://jobs.bytedance.com/experienced/position
+    note: "ByteDance subsidiary; roles are on the ByteDance portal, scoped to those mentioning 火山引擎"
+
+  - name: Alpha Compute
+    tier: Premier
+    type: fetch
+    careers_url: https://www.alphacompute.ai/careers
+  # ── General ──────────────────────────────────────────────────────────────
+
+  - name: Arm Limited
+    tier: General
+    type: talentbrew
+    talentbrew_base: https://careers.arm.com
+    careers_url: https://careers.arm.com
+
+  - name: Cisco Systems, Inc.
+    tier: General
+    type: fetch
+    careers_url: https://careers.cisco.com/global/en/home
+
+  - name: Fujitsu Limited
+    tier: General
+    type: gated
+    careers_url: https://www.jobs.global.fujitsu.com/
+    note: "SAP SuccessFactors portal, JS-rendered — search for confidential computing, TEE directly"
+  - name: JPMorgan Chase Bank, National Association
+    tier: General
+    type: oracle_hcm
+    oracle_host: jpmc.fa.oraclecloud.com
+    oracle_site: CX_1001
+    careers_url: https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs
+
+  - name: Marvell Technology, Inc.
+    tier: General
+    type: workday
+    workday_api: https://marvell.wd1.myworkdayjobs.com/wday/cxs/marvell/MarvellCareers/jobs
+    workday_job_base: https://marvell.wd1.myworkdayjobs.com/MarvellCareers
+    careers_url: https://marvell.wd1.myworkdayjobs.com/MarvellCareers
+
+  - name: Qualcomm Technologies, Inc.
+    tier: General
+    type: eightfold
+    eightfold_host: careers.qualcomm.com
+    eightfold_domain: qualcomm.com
+    careers_url: https://careers.qualcomm.com/careers
+
+  - name: Red Hat LLC
+    tier: General
+    type: workday
+    workday_api: https://redhat.wd5.myworkdayjobs.com/wday/cxs/redhat/jobs/jobs
+    workday_job_base: https://redhat.wd5.myworkdayjobs.com/jobs
+    careers_url: https://www.redhat.com/en/jobs
+
+  - name: Samsung Electronics Co. Ltd.
+    tier: General
+    type: workday
+    workday_api: https://sec.wd3.myworkdayjobs.com/wday/cxs/sec/Samsung_Careers/jobs
+    workday_job_base: https://sec.wd3.myworkdayjobs.com/Samsung_Careers
+    careers_url: https://sec.wd3.myworkdayjobs.com/Samsung_Careers
+
+  - name: SUSE LLC
+    tier: General
+    type: workday
+    workday_api: https://suse.wd3.myworkdayjobs.com/wday/cxs/suse/Jobsatsuse/jobs
+    workday_job_base: https://suse.wd3.myworkdayjobs.com/Jobsatsuse
+    careers_url: https://suse.wd3.myworkdayjobs.com/Jobsatsuse
+
+  - name: Canonical Group Limited
+    tier: General
+    type: greenhouse
+    slug: canonical
+    careers_url: https://canonical.com/careers
+
+  - name: Ampere Computing
+    tier: General
+    type: gated
+    careers_url: https://careers.amperecomputing.com/
+    note: "Jobvite-backed; careers.amperecomputing.com returns 403 to bots — search for confidential computing, security directly"
+
+  - name: Linaro Limited
+    tier: General
+    type: teamtailor_rss
+    rss_url: https://careers.linaro.org/jobs.rss
+    careers_url: https://careers.linaro.org/jobs
+
+  - name: Opaque Systems Inc.
+    tier: General
+    type: greenhouse
+    slug: opaquesystems
+    careers_url: https://www.opaque.co/careers
+  - name: Anjuna Security, Inc.
+    tier: General
+    type: gated
+    careers_url: https://www.anjuna.io/careers
+    note: "Careers page has no open roles listed (2026-10-26); old Lever board removed. Not fetch-scanned because product nav mentions confidential computing — check directly"
+
+  - name: Edgeless Systems
+    tier: General
+    type: fetch
+    careers_url: https://www.edgeless.systems/careers
+    note: "Personio ATS"
+
+  - name: EAGLYS
+    tier: General
+    type: herp
+    slug: eaglys
+    careers_url: https://eaglys.co.jp/careers/
+    note: "Job descriptions in Japanese"
+
+  - name: Modelyo
+    tier: General
+    type: fetch
+    careers_url: https://modelyo.com/company/careers
+
+  - name: CanaryBit
+    tier: General
+    type: no_page
+    note: "canarybit.eu/jobs and /careers 404; no careers link on homepage (checked 2026-10-26)"
+
+  - name: OpenNebula Systems
+    tier: General
+    type: teamtailor_rss
+    rss_url: https://careers.opennebula.io/jobs.rss
+    careers_url: https://careers.opennebula.io/jobs
+
+  - name: PremAI
+    tier: General
+    type: gated
+    careers_url: https://premai.notion.site/Work-at-Prem-1d18c108ef078034b3c9df9101c42c3a
+    note: "JS-rendered Notion page; no native ATS — visit link directly for open roles"
+
+  - name: Acompany Co., Ltd.
+    tier: General
+    type: gated
+    careers_url: https://recruit.acompany.tech/career/category/all
+    note: "JS-rendered (Studio.Design SPA); job listings in Japanese — search directly"
+  - name: Common Tools
+    tier: General
+    type: no_page
+    note: "common.tools — applications only via a Google Form, not crawlable"
+
+  - name: EQTY Lab
+    tier: General
+    type: no_page
+    note: "eqtylab.io/careers → 404; no careers link on homepage"
+
+  - name: Fr0ntierX Inc
+    tier: General
+    type: fetch
+    careers_url: https://www.fr0ntierx.com/careers
+
+  - name: Hushmesh
+    tier: General
+    type: no_page
+    note: "hushmesh.com/careers → 404"
+
+  - name: iExec Blockchain Tech
+    tier: General
+    type: gated
+    careers_url: https://www.welcometothejungle.com/en/companies/iexec/jobs
+    note: "careers.iex.ec gone; roles listed on Welcome to the Jungle (JS-rendered) — search directly"
+
+  - name: Invary
+    tier: General
+    type: no_page
+    note: "invary.com — no careers link; /careers → 404"
+
+  - name: Lucid Computing Inc.
+    tier: General
+    type: fetch
+    careers_url: https://lucidcomputing.ai/careers
+
+  - name: NEAR
+    tier: General
+    type: greenhouse
+    slug: nearfoundation
+    careers_url: https://job-boards.eu.greenhouse.io/nearfoundation
+
+  - name: Phala
+    tier: General
+    type: gated
+    careers_url: https://wellfound.com/company/phala-network
+    note: "phala.network deprecated (now phala.com); careers route to Wellfound (JS SPA) — search roles there"
+
+  - name: QLAD
+    tier: General
+    type: no_page
+    note: "qlad.com — no careers link found"
+  - name: Tinfoil
+    tier: General
+    type: fetch
+    careers_url: https://tinfoil.sh/join
+  - name: OmniTrust Security LLC
+    tier: General
+    type: fetch
+    careers_url: https://www.omnitrust.com/careers/
+    note: "Formerly Integrity Security Services (ISS); static open-positions list"
+
+
+  - name: 10102
+    tier: General
+    type: no_page
+    note: "10102.io: no careers page, LinkedIn only (checked 2026-10-26)"
+  - name: Confidential Core.AI
+    tier: General
+    type: gated
+    careers_url: https://confidentialcore.ai/careers
+    note: "Static page lists roles, but site nav names a Confidential Enclave product so a fetch scan would always false-positive; check directly"
+
+  - name: Corvex
+    tier: General
+    type: no_page
+    note: "corvex.ai: no careers page or ATS, LinkedIn only (checked 2026-10-26)"
+
+  - name: Hewlett Packard Enterprise
+    tier: General
+    type: workday
+    workday_api: https://hpe.wd5.myworkdayjobs.com/wday/cxs/hpe/Jobsathpe/jobs
+    workday_job_base: https://hpe.wd5.myworkdayjobs.com/Jobsathpe
+    careers_url: https://hpe.wd5.myworkdayjobs.com/Jobsathpe
+    note: "Renamed in LFX from 'Hewlett Packard Enterprise Development LP' (2026-08); Workday API unchanged"
+
+  - name: Trustless Labs
+    tier: General
+    type: no_page
+    note: "trustlesslabs.ai: minimal site (product confidant.ai), no careers page (checked 2026-10-26)"
+
+  - name: Caution SEZC
+    tier: General
+    type: fetch
+    careers_url: https://www.ycombinator.com/companies/caution/jobs
+    note: "YC jobs board; no roles listed as of 2026-10-26"
+
+  - name: Superasystem
+    tier: General
+    type: no_page
+    note: "superasystem.jp: no careers page (checked 2026-10-26)"
+
+  - name: Vertebrae
+    tier: General
+    type: no_page
+    note: "vertebrae.ai: no careers page (checked 2026-10-26)"
+
+  - name: White Point
+    tier: General
+    type: no_page
+    note: "whitepoint.co.jp: no recruitment page (checked 2026-10-26)"
+
+  - name: amotivv, inc.
+    tier: General
+    type: gated
+    careers_url: https://amotivv.com/careers
+    note: "JS-rendered SPA (sitemap lists /careers/arc-practitioner); check directly"
+
+
+  - name: Mearum
+    tier: General
+    type: no_page
+    note: "Added from LFX — update with correct careers page info"
+
+  - name: SevenLayerLabs
+    tier: General
+    type: no_page
+    note: "Added from LFX — update with correct careers page info"
+  # ── Startup ─────────────────────────────────────────────────────────────
+
+  - name: Confidential AI
+    tier: Startup
+    type: fetch
+    careers_url: https://confidential.ai/careers
+    note: "Static careers page with open-roles list"
+
+  - name: Digicert
+    tier: General
+    type: greenhouse
+    slug: digicert
+    careers_url: https://www.digicert.com/careers
+    note: "Greenhouse API — active careers page with job opportunities"
+  # ── Associate / Academic ──────────────────────────────────────────────────
+
+  - name: Acurast
+    tier: Associate
+    type: no_page
+    note: "No careers link on homepage"
+  - name: DLT Research Foundation
+    tier: Associate
+    type: gated
+    careers_url: https://www.exp.science/careers
+    note: "Rebranded to Exponential Science (dltscience.org → exp.science); JS-rendered filterable board"
+  - name: MIT Connection Science
+    tier: Associate
+    type: no_page
+    note: "Academic lab — no jobs page"
+
+  - name: Oasis Protocol Foundation
+    tier: Associate
+    type: no_page
+    note: "Rebranded oasisprotocol.org → oasis.net; /careers & /jobs 404; old greenhouse board 'oasisnetwork' removed"
+
+  - name: RISC-V International
+    tier: Associate
+    type: gated
+    careers_url: https://riscv.org/community/jobs/
+    note: "WordPress JS board (admin-ajax), job titles not in raw HTML; LF-employed roles — search directly"
+
+  - name: Shanghai Jiao Tong University
+    tier: Associate
+    type: no_page
+    note: "Academic institution"
+
+  - name: The MITRE Corporation
+    tier: Associate
+    type: phenom
+    phenom_site: https://careers.mitre.org/us/en
+    careers_url: https://careers.mitre.org/us/en

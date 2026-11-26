@@ -1,0 +1,12 @@
+Hello,
+
+This is the weekly Confidential Computing Consortium jobs round-up for your organisation. Our crawler checked your public careers site and found these open roles that look related to confidential computing:
+
+[]
+
+We'd love to see them on GitJobs (https://gitjobs.dev/?membership=ccc), the CCC's job board for careers in and around confidential computing. Please could you pass this on to the people who manage your job postings?
+
+If anything here isn't a confidential computing role, or we've missed one, just reply and let us know. The crawler is open source at https://github.com/confidential-computing/cc-jobs.
+
+Thanks,
+The Confidential Computing Consortium
